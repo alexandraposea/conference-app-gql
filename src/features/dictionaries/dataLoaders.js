@@ -1,4 +1,5 @@
 const DataLoader = require('dataloader')
+
 const getDictionaryLoaders = dbInstance => {
   return {
     conferenceTypeById: new DataLoader(ids =>
