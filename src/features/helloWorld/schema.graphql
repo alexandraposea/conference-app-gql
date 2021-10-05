@@ -25,6 +25,7 @@ type UserList {
 extend type Query {
   userData(id: ID, externalId: ID): User
   userList(pager: PagerInput!, filters: UserFilterInput): UserList!
+  myFirstEndpoint: String
 }
 
 # Not working! Only for demonstration
@@ -35,8 +36,4 @@ extend type Mutation {
 # Not working! Only for demonstration
 extend type Subscription {
   userChanged: String
-}
-
-extend type Query {
-  myFirstEndpoint: String
 }
