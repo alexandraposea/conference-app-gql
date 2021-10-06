@@ -1,6 +1,15 @@
 const { SQLDataSource } = require('../../utils/sqlDataSource')
 
-const conferenceColumns = ['Id', 'Name', 'ConferenceTypeId', 'LocationId', 'StartDate', 'EndDate', 'CategoryId']
+const conferenceColumns = [
+  'Id',
+  'Name',
+  'ConferenceTypeId',
+  'LocationId',
+  'OrganizerEmail',
+  'StartDate',
+  'EndDate',
+  'CategoryId'
+]
 
 class ConferenceDb extends SQLDataSource {
   generateWhereClause(queryBuilder, filters = {}) {
@@ -35,6 +44,19 @@ class ConferenceDb extends SQLDataSource {
       .first()
 
     return result
+  }
+
+  async getUsers(id) {
+    const userEmails = await this.knex
+      .select('AttendeeEmail')
+      .from('ConferenceXAttendee')
+      .where('ConferenceId', id)
+      .andWhere('StatusId', 1)
+
+    return userEmails
+    // return userEmails.map(user => {
+    //   user.attendeeEmail
+    // })
   }
 
   async updateConferenceXAttendee({ attendeeEmail, conferenceId, statusId }) {

@@ -10,6 +10,10 @@ const conferenceResolvers = {
     conference: async (_parent, { id }, { dataSources }, _info) => {
       const data = await dataSources.conferenceDb.getConferenceById(id)
       return data
+    },
+    users: async (_parent, { id }, { dataSources }, _info) => {
+      const data = await dataSources.conferenceDb.getUsers(id)
+      return data
     }
   },
 
@@ -65,6 +69,11 @@ const conferenceResolvers = {
     },
     withdraw: async (_parent, { input }, { dataSources }, _info) => {
       const updateInput = { ...input, statusId: status.Withdrawn }
+      const statusId = await dataSources.conferenceDb.updateConferenceXAttendee(updateInput)
+      return statusId
+    },
+    join: async (_parent, { input }, { dataSources }, _info) => {
+      const updateInput = { ...input, statusId: status.Joined }
       const statusId = await dataSources.conferenceDb.updateConferenceXAttendee(updateInput)
       return statusId
     },
